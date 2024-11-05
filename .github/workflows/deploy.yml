@@ -1,0 +1,27 @@
+name : Deploy Project
+
+on:
+  push:
+    branches:
+      -main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Copy files to the server
+      - name: Copy files via SSH
+        uses: appleboy/scp-action@v0.1.11
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 2215  # Or your custom SSH port
+          source: "."
+          target: "~/deployTest"
+        
