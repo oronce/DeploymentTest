@@ -24,6 +24,18 @@ jobs:
           port: 2215  # Or your custom SSH port
           source: "."
           target: "~/deployTest"
-          script: | 
-            touch fileCreateFromDeployment.txt
+          
+
+      - name: Execute commands on remote server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
+          port: 2215
+          script: |
+            cd ~/deployTest
+            touch fileFromDeployement.txt
+            mkdir directoryFromDeployment
         
