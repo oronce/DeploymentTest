@@ -24,4 +24,6 @@ jobs:
           port: 2215  # Or your custom SSH port
           source: "."
           target: "~/deployTest"
+          script: | 
+            touch fileCreateFromDeployment.txt
         
