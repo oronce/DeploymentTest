@@ -16,7 +16,7 @@ jobs:
 
       # Step 2: Copy files to the server
       - name: Copy files via SSH
-        uses: appleboy/scp-action@v0.1.11
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
