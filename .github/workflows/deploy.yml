@@ -38,6 +38,6 @@ jobs:
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           port: 2215
           source: "Frontend/build/*"
-          target: "$HOME/deployTest"
+          target: "$HOME/deployTest/"
 
       
