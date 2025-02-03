@@ -1,9 +1,11 @@
-name : Deploy Project
+name: Deploy Project
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'Frontend/**'
 
 jobs:
   deploy:
@@ -14,28 +16,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Copy files to the server
-      - name: Copy files via SSH
-        uses: appleboy/scp-action@v0.1.4
+      # Step 2: Install Node.js
+      - name: Install Node.js
+        uses: actions/setup-node@v2
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 2215  # Or your custom SSH port
-          source: "."
-          target: "~/deployTest"
-          
+          node-version: '14'
 
-      - name: Execute commands on remote server
-        uses: appleboy/ssh-action@v0.1.8
+      # Step 3: Build the code using Node.js
+      - name: Build the code using Node.js
+        run: |
+          cd Frontend
+          npm install
+          npm run build
+
+      - name: Copy build files to server
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           port: 2215
-          script: |
-            cd ~/deployTest
-            touch fileFromDeployement.txt
-            mkdir directoryFromDeployment
-        
+          source: "Frontend/build/*"
+          target: "$HOME/deployTest"
+
+      
