@@ -5,7 +5,7 @@ import React, { useState } from "react";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const toggleTheme = () => {
+  const toggleTheme = () =>  {
   setIsDarkMode((prevMode) => { 
     const newMode = !prevMode;
     if (!newMode)   { 
