@@ -13,7 +13,7 @@ function App() {
     } else {
       document.documentElement.classList.remove('dark');
     }
-    return newMode;
+    return newMode ;
   });
 };
 

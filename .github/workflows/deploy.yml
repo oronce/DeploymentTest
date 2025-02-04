@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           port: 2215
-          working-directory: Frontend/build  # Change directory to build
+          working-directory: Frontend/build/  # Change directory to build
           source: "*"                        # Copy all contents of build
           target: "$HOME/deployTest/"
 
