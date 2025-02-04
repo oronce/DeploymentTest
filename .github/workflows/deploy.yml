@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - 'Frontend/**'
+     
+env:
+  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }} # Global environment variable accessible to all jobs and steps      
 
 jobs:
   deploy:
@@ -37,8 +40,22 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           port: 2215
-          working-directory: Frontend/build/  # Change directory to build
-          source: "*"                        # Copy all contents of build
-          target: "$HOME/deployTest/"
+          source: "Frontend/build/*"
+          target: "/var/www/hwifizone.ridcode.com/web/"
+          
 
-      
+       # Step 4: Copy files to the server using rsync
+      - name: Copy files to the server using rsync
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
+          port: 2215
+          script: |
+            cd /var/www/hwifizone.ridcode.com/web/Frontend
+            rsync -avz  ./build/ /var/www/hwifizone.ridcode.com/web   
+            echo ${{ secrets.REACT_APP_API_BASE_URL }} is the url
+
+        

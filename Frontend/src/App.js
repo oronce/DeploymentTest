@@ -6,9 +6,9 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
-  setIsDarkMode((prevMode) => {
+  setIsDarkMode((prevMode) => { 
     const newMode = !prevMode;
-    if (!newMode) {
+    if (!newMode)   { 
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
